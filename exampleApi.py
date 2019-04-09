@@ -1,18 +1,26 @@
+################ Graphic ################
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.set(color_codes=True)
+
 ################ Data preparation ################
 
 import pandas as pd
 sf = pd.read_csv('data/employees_good.csv')
 
 def get_distance(x):
-    if x <= 10:
+    if x <= 5:
         return 1
+    elif x > 5 and x <= 10:   
+        return 2 
     elif x > 10 and x <= 20:
-        return 2
-    else:
         return 3
+    else:
+        return 4
 
 def get_monthly_income(x):
-    if x <= 5000:
+    if x > 2000 and x <= 5000:
         return 1
     elif x > 5000 and x <= 10000:
         return 2
@@ -96,6 +104,9 @@ print("Number of mislabeled points out of a total {} points : {}, performance {:
           (X_test["Attrition"] != y_pred).sum(),
           100*(1-(X_test["Attrition"] != y_pred).sum()/X_test.shape[0])
 ))
+
+sns.distplot(sf.DistanceFromHome)
+# plt.show()
 
 ################# API ################
 from flask import Flask
