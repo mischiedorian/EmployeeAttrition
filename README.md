@@ -2,7 +2,7 @@
 
 ` pip3 install -r requirements `
 
-` python3 exampleApi.py `
+` python exampleApi.py `
 
 http://localhost:5000/attrition
 
