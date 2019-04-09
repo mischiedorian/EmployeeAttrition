@@ -6,6 +6,7 @@
 
 http://localhost:5000/attrition
 
+```json
 {
 	"age":"55",
     "education":"3",
@@ -18,6 +19,7 @@ http://localhost:5000/attrition
     "monthlyIncome":"3",
     "totalWorkingYears":"24"
 }
+```
 
 ## FrontEnd
 
