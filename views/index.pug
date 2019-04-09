@@ -1,0 +1,112 @@
+html
+  head
+    title= title
+    // Latest compiled and minified CSS
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    // Optional theme
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.5.0/css/all.css', integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU', crossorigin='anonymous')
+    link(rel='stylesheet', href='css/index.css')
+    // Latest compiled and minified JavaScript
+    script(src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+    script(src='js/index.js')
+
+  body
+    .container
+        br
+        br
+        .row
+          .col-md-6.col-md-offset-3
+            .custom-container 
+              br
+              nav.navbar.navbar-default
+                .container-fluid
+                  .navbar-header#image-container
+                    a(href='#')#image
+                      img(alt='Brand', src='images/image.png', style='width: 150px;')
+              br
+              br        
+              form
+                .row
+                  .col-md-6
+                    .form-group
+                      label(for='education-input') Education
+                      select#education-input.form-control
+                        option(value='', selected='', disabled='', hidden='') Choose education
+                        option(value='1') Politehnica
+                        option(value='2') Universitate
+                        option(value='3') Cibernetica
+                        option(value='4') Other technical
+                        option(value='5') Other
+                  .col-md-6    
+                    .form-group
+                      label(for='job-level-input') Job Level
+                      select#job-level-input.form-control
+                        option(value='', selected='', disabled='', hidden='') Choose job level
+                        option(value='1') Novice
+                        option(value='2') Advanced
+                        option(value='3') Competent
+                        option(value='4') Proficient
+                        option(value='5') Expert
+                .row
+                  .col-md-6
+                    .form-group
+                      label(for='age-input') Age
+                      input#age-input.form-control(type='number')
+                  .col-md-6
+                    .form-group
+                      label(for='companies-worked-input') Number of companies worked
+                      input#companies-worked-input.form-control(type='number')
+                .row
+                  .col-md-6
+                    .form-group
+                      label(for='trainings-last-year-input') Trainings last year
+                      input#trainings-last-year-input.form-control(type='number')
+                  .col-md-6        
+                    .form-group
+                      label(for='years-company-input') Years at company
+                      input#years-company-input.form-control(type='number')
+                .row          
+                  .col-md-6        
+                    .form-group
+                      label(for='years-since-last-promotion-input') Years since last promotion
+                      input#years-since-last-promotion-input.form-control(type='number')
+                  .col-md-6
+                    .form-group
+                      label(for='distance-from-home-input') Distance from home
+                      input#distance-from-home-input.form-control(type='number')
+                .row
+                  .col-md-6      
+                    .form-group
+                      label(for='salary-input') Salary
+                      input#salary-input.form-control(type='number')
+                  .col-md-6    
+                    .form-group
+                      label(for='working-years-input') Total working years
+                      input#working-years-input.form-control(type='number')     
+                br
+                .row
+                  .col-md-2.col-md-offset-5
+                    button.btn.btn-info(type='button', onclick="send()") Submit
+
+            #myModal.modal.fade(role='dialog')
+              .modal-dialog
+                // Modal content
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close') ×
+                    h4.modal-title Brobot Survey Result
+                  .modal-body
+                    p
+                      | Hapiness Level: 
+                      i#aiLevel.far.fa-3x
+                    .progress
+                      #aiProgress.progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax='100') 25%
+                  .modal-footer
+                    .pull-left
+                      i.far.fa-2x.fa-frown
+                      i.far.fa-2x.fa-meh
+                      i.far.fa-2x.fa-grin
+                      i.far.fa-2x.fa-laugh
+                    button.btn.btn-default(type='button', data-dismiss='modal', aria-label='Close') Close
