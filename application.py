@@ -4,10 +4,49 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 sns.set(color_codes=True)
 
+
+############ JSON Encoder ################
+import json
+from bson import ObjectId
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
+################ MongoDb #################
+from pymongo import MongoClient
+mongoUrl = "mongodb://localhost:27017/employee_attrition"
+client = MongoClient(mongoUrl)
+employeeAttrition = client.employee_attrition
+
 ################ Data preparation ################
 
 import pandas as pd
-sf = pd.read_csv('data/employees_good.csv')
+
+# Used to import data in mongodb
+
+# sf = pd.read_csv('data/employees_good.csv')
+# employee = employeeAttrition.employee
+# for i in sf.iterrows():
+#     emp = {
+#         "age": i[1].Age,
+#         "attrition" : i[1].Attrition,
+#         "distance_from_home" : i[1].DistanceFromHome,
+#         "education": i[1].Education,
+#         "job_level": i[1].JobLevel,
+#         "monthly_income": i[1].MonthlyIncome,
+#         "num_companies_worked": i[1].NumCompaniesWorked,
+#         "total_working_years": i[1].TotalWorkingYears,
+#         "training_times_last_year" : i[1].TrainingTimesLastYear,
+#         "years_at_company": i[1].YearsAtCompany,
+#         "years_since_last_promotion": i[1].YearsSinceLastPromotion
+#     }
+#     employee.insert_one(emp)
+
+employee = employeeAttrition.employee
+sf = pd.DataFrame.from_dict(employee.find())
 
 def get_distance(x):
     if x <= 5:
@@ -65,22 +104,22 @@ def get_education(x):
     else:
         return 5
 
-sf['Distance'] = sf.DistanceFromHome.apply(get_distance)
-sf['Income'] = sf.MonthlyIncome.apply(get_monthly_income)
-sf['twy'] = sf.TotalWorkingYears.apply(get_twy)
-sf['AgeIndex'] = sf.Age.apply(get_age)
+sf['Distance'] = sf.distance_from_home.apply(get_distance)
+sf['Income'] = sf.monthly_income.apply(get_monthly_income)
+sf['twy'] = sf.total_working_years.apply(get_twy)
+sf['AgeIndex'] = sf.age.apply(get_age)
 
-sf = sf.drop(['MonthlyIncome', 'DistanceFromHome', 'TotalWorkingYears', 'Age'], axis=1)
+sf = sf.drop(['monthly_income', 'distance_from_home', 'total_working_years', 'age'], axis=1)
 
 
-sf = sf.rename(index=str, columns = {"Distance" : "DistanceFromHome", "Income" : "MonthlyIncome",
-                                     "twy" : "TotalWorkingYears", 'AgeIndex': 'Age'})
+sf = sf.rename(index=str, columns = {"Distance" : "distance_from_home", "Income" : "monthly_income",
+                                     "twy" : "total_working_years", 'AgeIndex': 'age'})
 
 # print(sf.head())
 
-X = sf[['Age', 'Education', 'JobLevel', 'NumCompaniesWorked', 'TrainingTimesLastYear',
-       'YearsAtCompany', 'YearsSinceLastPromotion', 'DistanceFromHome', 'MonthlyIncome', 'TotalWorkingYears']]
-Y = sf['Attrition']
+X = sf[['age', 'education', 'job_level', 'num_companies_worked', 'training_times_last_year',
+       'years_at_company', 'years_since_last_promotion', 'distance_from_home', 'monthly_income', 'total_working_years']]
+Y = sf['attrition']
 
 ################# Training Classifier ################
 from sklearn.model_selection import train_test_split
@@ -89,23 +128,23 @@ import time
 
 
 X_train, X_test = train_test_split(sf, test_size=0.5, random_state=int(time.time()))
-used_features = ['Age', 'Education', 'JobLevel', 'NumCompaniesWorked', 'TrainingTimesLastYear',
-       'YearsAtCompany', 'YearsSinceLastPromotion', 'DistanceFromHome', 'MonthlyIncome', 'TotalWorkingYears']
+used_features = ['age', 'education', 'job_level', 'num_companies_worked', 'training_times_last_year',
+       'years_at_company', 'years_since_last_promotion', 'distance_from_home', 'monthly_income', 'total_working_years']
 
 # gnb = GaussianNB()
 gnb = GradientBoostingClassifier()
 
-gnb.fit(X_train[used_features].values, X_train['Attrition'])
+gnb.fit(X_train[used_features].values, X_train['attrition'])
 
 y_pred = gnb.predict(X_test[used_features])
 print("Number of mislabeled points out of a total {} points : {}, performance {:05.2f}%"
       .format(
           X_test.shape[0],
-          (X_test["Attrition"] != y_pred).sum(),
-          100*(1-(X_test["Attrition"] != y_pred).sum()/X_test.shape[0])
+          (X_test["attrition"] != y_pred).sum(),
+          100*(1-(X_test["attrition"] != y_pred).sum()/X_test.shape[0])
 ))
 
-sns.distplot(sf.DistanceFromHome)
+sns.distplot(sf.distance_from_home)
 # plt.show()
 
 ################# API ################
@@ -185,8 +224,42 @@ class Attrition(Resource):
             "score" : response
         }
 
-        return responseBody, 200 
+        return responseBody, 200
+
+user = employeeAttrition.user
+
+class Login(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('username')
+        parser.add_argument('password')
+
+        args = parser.parse_args()
+        print(args)
+
+        username = args['username']
+        password = args['password']
+        userFound = user.find_one({"username": username})
+
+        print(userFound)
+        if userFound['password'] == password:
+            return '', 200
+        else:
+            return '', 401
+
+
+class Employee(Resource):
+    def get(self):
+        empls = employee.find()
+
+        if empls:
+            return JSONEncoder().encode(list(empls)), 200
+        else:
+            return 'Nothing', 404
 
 api.add_resource(Attrition, "/attrition")
+api.add_resource(Employee, "/employees")
+api.add_resource(Login,"/login")
+
 
 app.run(debug=True, port=5000)        
