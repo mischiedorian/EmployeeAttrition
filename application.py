@@ -116,6 +116,7 @@ sf = sf.rename(index=str, columns = {"Distance" : "distance_from_home", "Income"
                                      "twy" : "total_working_years", 'AgeIndex': 'age'})
 
 # print(sf.head())
+print(sf)
 
 X = sf[['age', 'education', 'job_level', 'num_companies_worked', 'training_times_last_year',
        'years_at_company', 'years_since_last_promotion', 'distance_from_home', 'monthly_income', 'total_working_years']]

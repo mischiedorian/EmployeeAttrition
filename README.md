@@ -2,13 +2,13 @@
 
 ` pip3 install -r requirements `
 
-` python exampleApi.py `
+` python3 application.py `
 
 http://localhost:5000/attrition
 
 ```json
-{
-	"age":"55",
+{   
+    "age":"55",
     "education":"3",
     "jobLevel":"5",
     "numCompaniesWorked":"5",
@@ -25,6 +25,4 @@ http://localhost:5000/attrition
 
 ` npm install `
 
-` npm start `
-
-http://localhost:3000/
+Run `ng serve` for a dev server. Navigate to http://localhost:4200/
