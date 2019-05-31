@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../service/login.service";
 import {ApiService} from "../service/api.service";
 
@@ -11,35 +11,40 @@ export class HomeComponent implements OnInit {
 
   employees: EmployeeResponse[] = [];
 
-  constructor(private loginService: LoginService, private apiService: ApiService) { }
+  constructor(private loginService: LoginService, private apiService: ApiService) {
+  }
 
   ngOnInit() {
     this.loginService.checkLoginPresence('/');
     this.apiService.getAllEmployees().toPromise().then(
-        res => {
-          this.employees = JSON.parse(res);
-        },
-        err => {
-          console.error(err);
-        }
+      res => {
+        this.employees = res;
+      },
+      err => {
+        console.error(err);
+      }
     )
   };
 
-  deleteEmployee(id: string) {
+  deleteEmployee(e) {
+    const id = e.currentTarget.className;
     this.apiService.deleteEmployee(id).toPromise().then(
-        res => {
-          alert("done");
-           console.log("s-a sters");
-        },
-        err => {
-          console.error(err);
+      res => {
+        for (let i = 0; i < this.employees.length; i++) {
+          if (this.employees[i]._id == id) {
+            this.employees.splice(i, 1);
+          }
         }
+      },
+      err => {
+        console.error(err);
+      }
     );
   }
 }
 
 export interface EmployeeResponse {
-  id: string;
+  _id: string;
   age: number;
   distance_from_home: number;
   education: number;

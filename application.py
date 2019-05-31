@@ -158,6 +158,7 @@ CORS(app)
 api = Api(app)
 
 class Attrition(Resource):
+    @app.route('/attrition', methods=['POST'])
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('age')
@@ -230,7 +231,8 @@ class Attrition(Resource):
 user = employeeAttrition.user
 
 class Login(Resource):
-    def post(self):
+    # @app.route('/login', methods=['PATCH'])
+    def login(self):
         parser = reqparse.RequestParser()
         parser.add_argument('username')
         parser.add_argument('password')
@@ -250,7 +252,8 @@ class Login(Resource):
 
 
 class Employee(Resource):
-    def get(self):
+    @app.route('/employees', methods=['GET'])
+    def getEmployees():
         empls = employee.find()
 
         if empls:
@@ -258,9 +261,14 @@ class Employee(Resource):
         else:
             return 'Nothing', 404
 
-api.add_resource(Attrition, "/attrition")
-api.add_resource(Employee, "/employees")
-api.add_resource(Login,"/login")
+    @app.route('/employees/<string:id>', methods=['DELETE'])
+    def deleteEmployee(id):
+        return '', 200
+
+
+# api.add_resource(Attrition, "/attrition")
+# api.add_resource(Employee, "/employees")
+api.add_resource(Login, "/login")
 
 
 app.run(debug=True, port=5000)        

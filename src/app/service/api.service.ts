@@ -20,8 +20,8 @@ export class ApiService {
         return this.http.post(this.LOGIN, account,{observe: 'response'});
     }
 
-    getAllEmployees(): Observable<string> {
-        return this.http.get<string>(this.EMPLOYEES);
+    getAllEmployees(): Observable<EmployeeResponse[]> {
+        return this.http.get<EmployeeResponse[]>(this.EMPLOYEES);
     }
 
     deleteEmployee(employeeId: string) {
