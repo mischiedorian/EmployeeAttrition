@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {LoginRequest} from "../login/login.component";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Employee} from "../management-employees/management-employees.component";
+import {Employee, ResponseList} from "../management-employees/management-employees.component";
 import {AttritionResponse, EmployeeModel} from "../home/home.component";
 
 @Injectable({
@@ -21,8 +21,8 @@ export class ApiService {
         return this.http.post(this.LOGIN, account,{observe: 'response'});
     }
 
-    getAllEmployees(): Observable<Employee[]> {
-        return this.http.get<Employee[]>(this.EMPLOYEES);
+    getAllEmployees(pageNr: number, totalPerPage: number): Observable<ResponseList> {
+        return this.http.get<ResponseList>(`${this.EMPLOYEES}/page/${pageNr}/number/${totalPerPage}`);
     }
 
     deleteEmployee(employeeId: string) {

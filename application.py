@@ -251,12 +251,16 @@ class Login(Resource):
             return '', 401
 
 class Employee(Resource):
-    @app.route('/employees', methods=['GET'])
-    def getEmployees():
-        empls = employee.find()
-
+    @app.route('/employees/page/<int:pageNr>/number/<int:totalPerPage>', methods=['GET'])
+    def getEmployees(pageNr, totalPerPage):
+        empls = employee.find().skip((pageNr - 1) * totalPerPage).limit(totalPerPage)
+        numberOfRows = employee.count_documents({})
+        responseBody = {
+            "obj": list(empls),
+            "counter": numberOfRows
+        }
         if empls:
-            return JSONEncoder().encode(list(empls)), 200
+            return JSONEncoder().encode(responseBody), 200
         else:
             return 'Nothing', 404
 

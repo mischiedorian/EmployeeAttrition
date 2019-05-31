@@ -10,15 +10,17 @@ import {ApiService} from "../service/api.service";
 export class ManagementEmployeesComponent implements OnInit {
 
   employees: Employee[] = [];
+  counter: number = 0;
 
   constructor(private loginService: LoginService, private apiService: ApiService) {
   }
 
   ngOnInit() {
     this.loginService.checkLoginPresence('/admin/management');
-    this.apiService.getAllEmployees().toPromise().then(
+    this.apiService.getAllEmployees(1, 10).toPromise().then(
       res => {
-        this.employees = res;
+        this.employees = res.obj;
+        this.counter = res.counter;
       },
       err => {
         console.error(err);
@@ -58,3 +60,7 @@ export interface Employee {
   attrition: string
 }
 
+export interface ResponseList {
+  obj: Employee[],
+  counter: number
+}
