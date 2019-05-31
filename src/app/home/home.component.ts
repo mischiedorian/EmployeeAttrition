@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "../service/login.service";
 import {ApiService} from "../service/api.service";
 
 @Component({
@@ -9,51 +8,57 @@ import {ApiService} from "../service/api.service";
 })
 export class HomeComponent implements OnInit {
 
-  employees: EmployeeResponse[] = [];
+  employeeModel: EmployeeModel = {
+    age: 0,
+    distanceFromHome: 0,
+    education: 0,
+    jobLevel: 0,
+    monthlyIncome: 0,
+    numCompaniesWorked: 0,
+    totalWorkingYears: 0,
+    trainingTimesLastYear: 0,
+    yearsAtCompany: 0,
+    yearsSinceLastPromotion: 0
+  };
 
-  constructor(private loginService: LoginService, private apiService: ApiService) {
+  attrition: AttritionResponse = {
+    percentage: 0,
+    score: 0
+  };
+
+  constructor(private apiService: ApiService) {
   }
 
-  ngOnInit() {
-    this.loginService.checkLoginPresence('/');
-    this.apiService.getAllEmployees().toPromise().then(
+  ngOnInit(): void {
+  }
+
+  sendData(): void {
+    this.apiService.getAttrition(this.employeeModel).toPromise().then(
       res => {
-        this.employees = res;
+        debugger;
+        this.attrition = res.body;
       },
       err => {
         console.error(err);
       }
     )
-  };
-
-  deleteEmployee(e) {
-    const id = e.currentTarget.className;
-    this.apiService.deleteEmployee(id).toPromise().then(
-      res => {
-        for (let i = 0; i < this.employees.length; i++) {
-          if (this.employees[i]._id == id) {
-            this.employees.splice(i, 1);
-          }
-        }
-      },
-      err => {
-        console.error(err);
-      }
-    );
   }
 }
 
-export interface EmployeeResponse {
-  _id: string;
+export interface EmployeeModel {
   age: number;
-  distance_from_home: number;
+  distanceFromHome: number;
   education: number;
-  job_level: number;
-  monthly_income: number;
-  num_companies_worked: number;
-  total_working_years: number;
-  training_times_last_year: number;
-  years_at_company: number;
-  years_since_last_promotion: number;
-  attrition: string
+  jobLevel: number;
+  monthlyIncome: number;
+  numCompaniesWorked: number;
+  totalWorkingYears: number;
+  trainingTimesLastYear: number;
+  yearsAtCompany: number;
+  yearsSinceLastPromotion: number;
+}
+
+export interface AttritionResponse {
+  percentage: number;
+  score: number;
 }

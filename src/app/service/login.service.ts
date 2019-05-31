@@ -13,7 +13,7 @@ export class LoginService {
     checkLoginPresence(currentLocation: string) {
         const login = window.localStorage.getItem(this.KEY);
         if(login === undefined || login === '' || login === null) {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/admin/login']);
         } else {
             this.router.navigate([currentLocation])
         }

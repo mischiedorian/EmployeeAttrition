@@ -159,7 +159,7 @@ api = Api(app)
 
 class Attrition(Resource):
     @app.route('/attrition', methods=['POST'])
-    def post(self):
+    def getAttrition():
         parser = reqparse.RequestParser()
         parser.add_argument('age')
         parser.add_argument('education')
@@ -226,13 +226,13 @@ class Attrition(Resource):
             "score" : response
         }
 
-        return responseBody, 200
+        return JSONEncoder().encode(responseBody), 200
 
 user = employeeAttrition.user
 
 class Login(Resource):
-    # @app.route('/login', methods=['PATCH'])
-    def login(self):
+    @app.route('/login', methods=['POST'])
+    def login():
         parser = reqparse.RequestParser()
         parser.add_argument('username')
         parser.add_argument('password')
@@ -250,7 +250,6 @@ class Login(Resource):
         else:
             return '', 401
 
-
 class Employee(Resource):
     @app.route('/employees', methods=['GET'])
     def getEmployees():
@@ -264,11 +263,5 @@ class Employee(Resource):
     @app.route('/employees/<string:id>', methods=['DELETE'])
     def deleteEmployee(id):
         return '', 200
-
-
-# api.add_resource(Attrition, "/attrition")
-# api.add_resource(Employee, "/employees")
-api.add_resource(Login, "/login")
-
 
 app.run(debug=True, port=5000)        

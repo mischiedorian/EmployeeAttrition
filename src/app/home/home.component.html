@@ -1,44 +1,163 @@
-<table class="table table-dark">
-  <tbody>
-  <tr>
-    <td>
-      <table class="col-md-12">
-        <thead>
-        <tr>
-          <td>Age</td>
-          <td>Distance From Home</td>
-          <td>Education</td>
-          <td>Job Level</td>
-          <td>Monthly Income</td>
-          <td>No. Companies Worked</td>
-          <td>Total Working Year</td>
-          <td>Training Times Last Year</td>
-          <td>Years At Company</td>
-          <td>Year Since Last Promotion</td>
-          <td>Attrition</td>
-          <td>Action</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="table-row" *ngFor="let employee of employees">
-          <td>{{employee.age}}</td>
-          <td>{{employee.distance_from_home}}</td>
-          <td>{{employee.education}}</td>
-          <td>{{employee.job_level}}</td>
-          <td>{{employee.monthly_income}}$</td>
-          <td>{{employee.num_companies_worked}}</td>
-          <td>{{employee.total_working_years}}</td>
-          <td>{{employee.training_times_last_year}}</td>
-          <td>{{employee.years_at_company}}</td>
-          <td>{{employee.years_since_last_promotion}}</td>
-          <td>{{employee.attrition}}</td>
-          <td>
-            <button (click)="deleteEmployee($event)" [ngClass]="employee._id">Delete</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="container"><br/><br/>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="custom-container"><br/>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header" id="image-container"><a href="#" id="image"><img alt="Brand"
+                                                                                        src="images/image.png"
+                                                                                        style="width: 150px;"/></a>
+            </div>
+          </div>
+        </nav>
+        <br/><br/>
+        <form (ngSubmit)="f.form.valid && sendData()" #f="ngForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group"><label for="education-input">Education</label>
+                <select
+                    class="form-control"
+                    id="education-input"
+                    name="education"
+                    [(ngModel)]="employeeModel.education"
+                >
+                  <option value="" selected="" disabled="" hidden="">Choose education</option>
+                  <option value="1">Politehnica</option>
+                  <option value="2">Universitate</option>
+                  <option value="3">Cibernetica</option>
+                  <option value="4">Other technical</option>
+                  <option value="5">Other</option>
+                </select></div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group"><label for="job-level-input">Job Level</label>
+                <select
+                    class="form-control"
+                    id="job-level-input"
+                    name="jobLevel"
+                    [(ngModel)]="employeeModel.jobLevel"
+                >
+                  <option value="" selected="" disabled="" hidden="">Choose job level</option>
+                  <option value="1">Novice</option>
+                  <option value="2">Advanced</option>
+                  <option value="3">Competent</option>
+                  <option value="4">Proficient</option>
+                  <option value="5">Expert</option>
+                </select></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="age-input">Age</label>
+                <input
+                    class="form-control"
+                    id="age-input"
+                    type="number"
+                    name="age"
+                    [(ngModel)]="employeeModel.age"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="companies-worked-input">Number of companies worked</label>
+                <input
+                    class="form-control"
+                    id="companies-worked-input"
+                    type="number"
+                    name="numCompaniesWorked"
+                    [(ngModel)]="employeeModel.numCompaniesWorked"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="trainings-last-year-input">Trainings last year</label>
+                <input
+                    class="form-control"
+                    id="trainings-last-year-input"
+                    type="number"
+                    name="trainingTimesLastYear"
+                    [(ngModel)]="employeeModel.trainingTimesLastYear"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="years-company-input">Years at company</label>
+                <input
+                    class="form-control"
+                    id="years-company-input"
+                    type="number"
+                    name="yearsAtCompany"
+                    [(ngModel)]="employeeModel.yearsAtCompany"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="years-since-last-promotion-input">Years since last promotion</label>
+                <input
+                    class="form-control"
+                    id="years-since-last-promotion-input"
+                    type="number"
+                    name="yearsSinceLastPromotion"
+                    [(ngModel)]="employeeModel.yearsSinceLastPromotion"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="distance-from-home-input">Distance from home</label>
+                <input
+                    class="form-control"
+                    id="distance-from-home-input"
+                    type="number"
+                    name="distanceFromHome"
+                    [(ngModel)]="employeeModel.distanceFromHome"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="salary-input">Salary</label>
+                <input
+                    class="form-control"
+                    id="salary-input"
+                    type="number"
+                    name="monthlyIncome"
+                    [(ngModel)]="employeeModel.monthlyIncome"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="working-years-input">Total working years</label>
+                <input
+                    class="form-control"
+                    id="working-years-input"
+                    type="number"
+                    name="totalWorkingYears"
+                    [(ngModel)]="employeeModel.totalWorkingYears"
+                />
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+              <button class="btn btn-info" type="submit">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

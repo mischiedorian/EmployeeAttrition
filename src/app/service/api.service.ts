@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {LoginRequest} from "../login/login.component";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {EmployeeResponse} from "../home/home.component";
+import {Employee} from "../management-employees/management-employees.component";
+import {AttritionResponse, EmployeeModel} from "../home/home.component";
 
 @Injectable({
     providedIn: 'root'
@@ -20,11 +21,15 @@ export class ApiService {
         return this.http.post(this.LOGIN, account,{observe: 'response'});
     }
 
-    getAllEmployees(): Observable<EmployeeResponse[]> {
-        return this.http.get<EmployeeResponse[]>(this.EMPLOYEES);
+    getAllEmployees(): Observable<Employee[]> {
+        return this.http.get<Employee[]>(this.EMPLOYEES);
     }
 
     deleteEmployee(employeeId: string) {
         return this.http.delete(`${this.EMPLOYEES}/${employeeId}`,{observe: 'response'});
+    }
+
+    getAttrition(employee: EmployeeModel): Observable<HttpResponse<AttritionResponse>> {
+        return this.http.post<AttritionResponse>(this.ATTRITION, employee, {observe: 'response'});
     }
 }

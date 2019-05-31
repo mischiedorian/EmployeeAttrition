@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../service/api.service";
 import {Router} from "@angular/router";
 import {LoginService} from "../service/login.service";
@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
   };
 
   constructor(private apiService: ApiService, private loginService: LoginService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.loginService.deleteAuthKey();
@@ -23,15 +24,17 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.apiService.login(this.model).toPromise().then(
-        res => {
-          if(res.status !== 200) {
-            alert('An error has occurred when logging in');
-          } else {
-            this.loginService.setAuthKey("authorized");
-            this.router.navigate(['/']);
-          }
-        },
-        err => {alert('something went wrong'); }
+      res => {
+        if (res.status !== 200) {
+          alert('An error has occurred when logging in');
+        } else {
+          this.loginService.setAuthKey("authorized");
+          this.router.navigate(['/admin/management']);
+        }
+      },
+      err => {
+        alert('something went wrong');
+      }
     );
   }
 }

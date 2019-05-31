@@ -1,0 +1,44 @@
+<table class="table table-dark">
+  <tbody>
+  <tr>
+    <td>
+      <table class="col-md-12">
+        <thead>
+        <tr>
+          <td>Age</td>
+          <td>Distance From Home</td>
+          <td>Education</td>
+          <td>Job Level</td>
+          <td>Monthly Income</td>
+          <td>No. Companies Worked</td>
+          <td>Total Working Year</td>
+          <td>Training Times Last Year</td>
+          <td>Years At Company</td>
+          <td>Year Since Last Promotion</td>
+          <td>Attrition</td>
+          <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-row" *ngFor="let employee of employees">
+          <td>{{employee.age}}</td>
+          <td>{{employee.distance_from_home}}</td>
+          <td>{{employee.education}}</td>
+          <td>{{employee.job_level}}</td>
+          <td>{{employee.monthly_income}}$</td>
+          <td>{{employee.num_companies_worked}}</td>
+          <td>{{employee.total_working_years}}</td>
+          <td>{{employee.training_times_last_year}}</td>
+          <td>{{employee.years_at_company}}</td>
+          <td>{{employee.years_since_last_promotion}}</td>
+          <td>{{employee.attrition}}</td>
+          <td>
+            <button (click)="deleteEmployee($event)" [ngClass]="employee._id">Delete</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>
