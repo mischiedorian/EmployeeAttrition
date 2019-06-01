@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="table-row" *ngFor="let employee of employees">
+        <tr class="table-row" *ngFor="let employee of this.employees">
           <td>{{employee.age}}</td>
           <td>{{employee.distance_from_home}}</td>
           <td>{{employee.education}}</td>
@@ -39,6 +39,18 @@
         </tbody>
       </table>
     </td>
+  </tr>
+  <tr>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center" id="pagination">
+        <li class="page-item" [ngClass]="{disabled: this.currentPage === 1}">
+          <div class="page-link" tabindex="-1" (click)="previousPage()">Previous</div>
+        </li>
+        <li class="page-item" [ngClass]="{disabled: this.currentPage === this.noOfPages}">
+          <div class="page-link" (click)="nextPage()">Next</div>
+        </li>
+      </ul>
+    </nav>
   </tr>
   <tr>
     Total: {{this.counter}}
