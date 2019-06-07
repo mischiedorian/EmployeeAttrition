@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
   sendData(): void {
     this.apiService.getAttrition(this.employeeModel).toPromise().then(
       res => {
-        debugger;
         this.attrition = res.body;
       },
       err => {

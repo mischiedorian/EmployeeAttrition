@@ -3,6 +3,7 @@
 @import "../node_modules/font-awesome/css/font-awesome.css";
 
 body {
+    background-image: url("../data/login.jpg");
     background-size: cover;
     padding: 50px;
     font: 14px "Lucida Grande", Halvetica, Arial, sans-serif;

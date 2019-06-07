@@ -10,11 +10,11 @@
 
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item" id="check-employee" (click)="toggleActive($event)">
         <a class="nav-link" routerLink="/">Check employee </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/admin/management">Admin</a>
+      <li class="nav-item" id="admin">
+        <a class="nav-link" routerLink="/admin/management" (click)="toggleActive($event)">Admin</a>
       </li>
     </ul>
   </div>

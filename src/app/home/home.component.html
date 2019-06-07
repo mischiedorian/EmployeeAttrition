@@ -1,15 +1,15 @@
-<div class="container"><br/><br/>
+<div class="container">
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-6 col-md-offset-3 center">
       <div class="custom-container"><br/>
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header" id="image-container"><a href="#" id="image"><img alt="Brand"
-                                                                                        src="images/image.png"
-                                                                                        style="width: 150px;"/></a>
-            </div>
-          </div>
-        </nav>
+<!--        <nav class="navbar navbar-default">-->
+<!--          <div class="container-fluid">-->
+<!--            <div class="navbar-header" id="image-container"><a href="#" id="image"><img alt="Brand"-->
+<!--                                                                                        src="images/image.png"-->
+<!--                                                                                        style="width: 150px;"/></a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </nav>-->
         <br/><br/>
         <form (ngSubmit)="f.form.valid && sendData()" #f="ngForm">
           <div class="row">
@@ -157,6 +157,24 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header"><button class="close" type="button" data-dismiss="modal" aria-label="Close">×</button>
+            <h4 class="modal-title">Brobot Survey Result</h4>
+          </div>
+          <div class="modal-body">
+            <p>Hapiness Level: <i class="far fa-3x" id="aiLevel"></i></p>
+            <div class="progress">
+              <div class="progress-bar" id="aiProgress" role="progressbar" aria-valuemin="0" aria-valuemax="100">25%</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="pull-left"><i class="far fa-2x fa-frown"></i><i class="far fa-2x fa-meh"></i><i class="far fa-2x fa-grin"></i><i class="far fa-2x fa-laugh"></i></div><button class="btn btn-default" type="button" data-dismiss="modal" aria-label="Close">Close</button></div>
+        </div>
       </div>
     </div>
   </div>
