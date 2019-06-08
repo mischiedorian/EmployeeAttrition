@@ -27,7 +27,7 @@ import pandas as pd
 
 # Used to import data in mongodb
 
-# sf = pd.read_csv('data/employees_good.csv')
+# sf = pd.read_csv('src/assets/employees_good.csv')
 # employee = employeeAttrition.employee
 # for i in sf.iterrows():
 #     emp = {
@@ -196,15 +196,6 @@ class Attrition(Resource):
 
         percentage = result_proba[0][0] * 100
 
-        if percentage <= 25:
-            response = 1
-        elif percentage > 25 and percentage <= 50:
-            response = 2
-        elif percentage > 50 and percentage <= 75:
-            response = 3
-        else: 
-            response = 4
-
         result = gnb.predict(
             [[
             get_age(int(args['age'])),
@@ -224,8 +215,7 @@ class Attrition(Resource):
         print(result)
 
         responseBody = {
-            "percentage": "{:05.2f}".format(percentage),
-            "score" : response
+            "percentage": "{:05.2f}".format(percentage)
         }
 
         return JSONEncoder().encode(responseBody), 200

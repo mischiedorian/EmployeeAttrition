@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {Router, RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {NavigationComponent} from './navigation/navigation.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -11,10 +11,13 @@ import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 import {NgHttpLoaderModule} from 'ng-http-loader';
 import {ManagementEmployeesComponent} from './management-employees/management-employees.component';
+import {ModalResponseComponent} from './modal-response/modal-response.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 const appRoutes: Routes = [
   {
-    path:'',
+    path: '',
     component: HomeComponent
   },
   {
@@ -33,7 +36,8 @@ const appRoutes: Routes = [
     NavigationComponent,
     LoginComponent,
     HomeComponent,
-    ManagementEmployeesComponent
+    ManagementEmployeesComponent,
+    ModalResponseComponent
   ],
   imports: [
     BrowserModule,
@@ -41,10 +45,13 @@ const appRoutes: Routes = [
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgHttpLoaderModule.forRoot()
+    NgHttpLoaderModule.forRoot(),
+    NgbModule,
+    BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalResponseComponent]
 })
 export class AppModule {
 }

@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../service/api.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ModalResponseComponent} from "../modal-response/modal-response.component";
 
 @Component({
   selector: 'app-home',
@@ -22,11 +24,10 @@ export class HomeComponent implements OnInit {
   };
 
   attrition: AttritionResponse = {
-    percentage: 0,
-    score: 0
+    percentage: 0
   };
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -36,11 +37,17 @@ export class HomeComponent implements OnInit {
     this.apiService.getAttrition(this.employeeModel).toPromise().then(
       res => {
         this.attrition = res.body;
+        this.openResponseModal();
       },
       err => {
         console.error(err);
       }
     )
+  }
+
+  openResponseModal() {
+    const modalRef = this.modalService.open(ModalResponseComponent, {size: 'lg'});
+    modalRef.componentInstance.attritionResponse = this.attrition;
   }
 }
 
@@ -59,5 +66,4 @@ export interface EmployeeModel {
 
 export interface AttritionResponse {
   percentage: number;
-  score: number;
 }

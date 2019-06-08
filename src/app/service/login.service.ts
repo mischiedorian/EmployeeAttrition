@@ -26,4 +26,8 @@ export class LoginService {
     deleteAuthKey() {
         window.localStorage.setItem(this.KEY, '');
     }
+
+    getAuthKey() {
+        return window.localStorage.getItem(this.KEY);
+    }
 }
