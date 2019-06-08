@@ -1,8 +1,23 @@
 ################ Graphic ################
 
 import seaborn as sns
-import matplotlib.pyplot as plt
+
 sns.set(color_codes=True)
+
+################  Hash  #################
+import hashlib
+import uuid
+
+
+def hash_password(password):
+    # uuid is used to generate a random number
+    salt = uuid.uuid4().hex
+    return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
+
+
+def check_password(hashed_password, user_password):
+    password, salt = hashed_password.split(':')
+    return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
 
 
 ############ JSON Encoder ################
@@ -116,7 +131,7 @@ sf = sf.rename(index=str, columns = {"Distance" : "distance_from_home", "Income"
                                      "twy" : "total_working_years", 'AgeIndex': 'age'})
 
 # print(sf.head())
-print(sf)
+# print(sf)
 
 X = sf[['age', 'education', 'job_level', 'num_companies_worked', 'training_times_last_year',
        'years_at_company', 'years_since_last_promotion', 'distance_from_home', 'monthly_income', 'total_working_years']]
@@ -235,7 +250,7 @@ class Login(Resource):
         userFound = user.find_one({"username": username})
 
         print(userFound)
-        if userFound['password'] == password:
+        if check_password(userFound['password'], password):
             return '', 200
         else:
             return '', 401
