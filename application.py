@@ -10,7 +10,6 @@ import uuid
 
 
 def hash_password(password):
-    # uuid is used to generate a random number
     salt = uuid.uuid4().hex
     return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
 
@@ -32,9 +31,11 @@ class JSONEncoder(json.JSONEncoder):
 
 ################ MongoDb #################
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 mongoUrl = "mongodb://localhost:27017/employee_attrition"
 client = MongoClient(mongoUrl)
 employeeAttrition = client.employee_attrition
+employee = employeeAttrition.employee
 
 ################ Data preparation ################
 
@@ -43,7 +44,6 @@ import pandas as pd
 # Used to import data in mongodb
 
 # sf = pd.read_csv('src/assets/employees_good.csv')
-# employee = employeeAttrition.employee
 # for i in sf.iterrows():
 #     emp = {
 #         "age": i[1].Age,
@@ -60,14 +60,13 @@ import pandas as pd
 #     }
 #     employee.insert_one(emp)
 
-employee = employeeAttrition.employee
 sf = pd.DataFrame.from_dict(employee.find())
 
 def get_distance(x):
     if x <= 5:
         return 1
-    elif x > 5 and x <= 10:   
-        return 2 
+    elif x > 5 and x <= 10:
+        return 2
     elif x > 10 and x <= 20:
         return 3
     else:
@@ -80,7 +79,7 @@ def get_monthly_income(x):
         return 2
     else:
         return 3
-    
+
 def get_twy(x):
     if x <= 2:
         return 1
@@ -106,7 +105,7 @@ def get_age(x):
         return 4
     else:
         return 5
-    
+
 def get_education(x):
     if x == 'Politehnica':
         return 1
@@ -226,6 +225,27 @@ class Attrition(Resource):
         ]]
         )
 
+        attritionLevel = ''
+        if percentage >= 50:
+            attritionLevel = 'yes'
+        else:
+            attritionLevel = 'no'
+
+        e = {
+            "age": int(args['age']),
+            "attrition": attritionLevel,
+            "distance_from_home": int(args['distanceFromHome']),
+            "education": args['education'],
+            "job_level": int(args['jobLevel']),
+            "monthly_income": int(args['monthlyIncome']),
+            "num_companies_worked": int(args['numCompaniesWorked']),
+            "total_working_years": int(args['totalWorkingYears']),
+            "training_times_last_year": int(args['trainingTimesLastYear']),
+            "years_at_company": int(args['yearsAtCompany']),
+            "years_since_last_promotion": int(args['yearsSinceLastPromotion'])
+        }
+        employee.insert_one(e)
+
         print("-----------------------RESULT-------------------------")
         print(result)
 
@@ -271,6 +291,7 @@ class Employee(Resource):
 
     @app.route('/employees/<string:id>', methods=['DELETE'])
     def deleteEmployee(id):
+        employee.delete_one({"_id": ObjectId(id)})
         return '', 200
 
 app.run(debug=True, port=5000)
