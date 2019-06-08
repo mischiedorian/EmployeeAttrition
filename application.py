@@ -132,8 +132,10 @@ sf = sf.rename(index=str, columns = {"Distance" : "distance_from_home", "Income"
 # print(sf.head())
 # print(sf)
 
-X = sf[['age', 'education', 'job_level', 'num_companies_worked', 'training_times_last_year',
-       'years_at_company', 'years_since_last_promotion', 'distance_from_home', 'monthly_income', 'total_working_years']]
+X = sf[['age', 'education', 'job_level', 'num_companies_worked',
+        'training_times_last_year','years_at_company',
+        'years_since_last_promotion', 'distance_from_home',
+        'monthly_income', 'total_working_years']]
 Y = sf['attrition']
 
 ################# Training Classifier ################
@@ -143,8 +145,9 @@ import time
 
 
 X_train, X_test = train_test_split(sf, test_size=0.5, random_state=int(time.time()))
-used_features = ['age', 'education', 'job_level', 'num_companies_worked', 'training_times_last_year',
-       'years_at_company', 'years_since_last_promotion', 'distance_from_home', 'monthly_income', 'total_working_years']
+used_features = ['age', 'education', 'job_level', 'num_companies_worked',
+                 'training_times_last_year', 'years_at_company', 'years_since_last_promotion',
+                 'distance_from_home', 'monthly_income', 'total_working_years']
 
 # gnb = GaussianNB()
 gnb = GradientBoostingClassifier()
@@ -152,6 +155,7 @@ gnb = GradientBoostingClassifier()
 gnb.fit(X_train[used_features].values, X_train['attrition'])
 
 y_pred = gnb.predict(X_test[used_features])
+
 print("Number of mislabeled points out of a total {} points : {}, performance {:05.2f}%"
       .format(
           X_test.shape[0],

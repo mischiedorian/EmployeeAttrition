@@ -51,3 +51,4 @@ export class ModalResponseComponent implements OnInit {
     this.activeModal.dismiss();
   }
 }
+
