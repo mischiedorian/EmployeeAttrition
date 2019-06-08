@@ -267,6 +267,8 @@ class Login(Resource):
 
         username = args['username']
         password = args['password']
+        if username == "" or password == "":
+            return '', 403
         userFound = user.find_one({"username": username})
 
         print(userFound)

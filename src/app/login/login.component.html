@@ -1,33 +1,38 @@
-<h2>Login</h2>
 <form (ngSubmit)="f.form.valid && login()" #f="ngForm"
       novalidate class="feedback-form">
-  <!--  username -->
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input id="username"
-           type="text"
-           name="username"
-           class="form-control"
-           [(ngModel)]="model.username"
-           #username="ngModel"
-           [ngClass]="{' is-invalid': f.submitted && username.invalid }"/>
-  </div>
-
-  <!--  password -->
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input id="password"
-           type="password"
-           name="password"
-           class="form-control"
-           [(ngModel)]="model.password"
-           #password="ngModel"
-           [ngClass]="{' is-invalid': f.submitted && password.invalid }"
-           required/>
-  </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">
-       Login
-    </button>
+  <div class="container">
+    <div class="login-form">
+      <div class="main-div">
+        <div class="panel">
+          <h1>Login</h1>
+          <div id="Login">
+            <div class="form-group">
+              <input id="inputUsername"
+                     class="form-control"
+                     type="text"
+                     placeholder="Username"
+                     [(ngModel)]="model.username"
+                     name="username"
+                     #username="ngModel"
+                     [ngClass]="{' is-invalid': f.submitted && username.invalid }"
+                     required/>
+            </div>
+            <div class="form-group">
+              <input id="inputPassword"
+                     class="form-control"
+                     type="password"
+                     placeholder="Password"
+                     name="password"
+                     [(ngModel)]="model.password"
+                     #password="ngModel"
+                     [ngClass]="{' is-invalid': f.submitted && password.invalid }"
+                     required
+              />
+            </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </form>
