@@ -12,16 +12,16 @@ import {ToastrService} from "ngx-toastr";
 export class HomeComponent implements OnInit {
 
   employeeModel: EmployeeModel = {
-    age: 0,
-    distanceFromHome: 0,
-    education: 0,
-    jobLevel: 0,
-    monthlyIncome: 0,
-    numCompaniesWorked: 0,
-    totalWorkingYears: 0,
-    trainingTimesLastYear: 0,
-    yearsAtCompany: 0,
-    yearsSinceLastPromotion: 0
+    age: null,
+    distanceFromHome: null,
+    education: null,
+    jobLevel: null,
+    monthlyIncome: null,
+    numCompaniesWorked: null,
+    totalWorkingYears: null,
+    trainingTimesLastYear: null,
+    yearsAtCompany: null,
+    yearsSinceLastPromotion: null
   };
 
   attrition: AttritionResponse = {

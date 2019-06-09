@@ -17,6 +17,11 @@
                      [ngClass]="{' is-invalid': f.submitted && username.invalid }"
                      required/>
             </div>
+            <!-- input validation group -->
+            <div *ngIf="f.submitted && username.invalid" class="invalid-input">
+              <!-- individual validation errors -->
+              <div *ngIf="username.errors?.required">Field is required</div>
+            </div>
             <div class="form-group">
               <input id="inputPassword"
                      class="form-control"
@@ -28,6 +33,11 @@
                      [ngClass]="{' is-invalid': f.submitted && password.invalid }"
                      required
               />
+              <!-- input validation group -->
+              <div *ngIf="f.submitted && password.invalid" class="invalid-input">
+                <!-- individual validation errors -->
+                <div *ngIf="password.errors?.required">Field is required</div>
+              </div>
             </div>
             <button class="btn btn-primary" type="submit">Login</button>
           </div>
