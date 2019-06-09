@@ -28,6 +28,10 @@ const appRoutes: Routes = [
   {
     path: 'admin/login',
     component: LoginComponent
+  },
+  {
+    path: '**',
+    component: HomeComponent
   }
 ];
 

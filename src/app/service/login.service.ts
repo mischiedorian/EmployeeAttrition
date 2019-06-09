@@ -27,7 +27,7 @@ export class LoginService {
         window.localStorage.setItem(this.KEY, '');
     }
 
-    getAuthKey() {
-        return window.localStorage.getItem(this.KEY);
+    isLoginPage(): boolean {
+        return window.location.pathname === '/admin/login';
     }
 }
