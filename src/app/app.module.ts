@@ -14,6 +14,7 @@ import {ManagementEmployeesComponent} from './management-employees/management-em
 import {ModalResponseComponent} from './modal-response/modal-response.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ToastrModule} from 'ngx-toastr';
 
 const appRoutes: Routes = [
   {
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
     FormsModule,
     NgHttpLoaderModule.forRoot(),
     NgbModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

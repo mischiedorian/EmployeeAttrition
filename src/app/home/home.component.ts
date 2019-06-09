@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../service/api.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ModalResponseComponent} from "../modal-response/modal-response.component";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit {
     percentage: 0
   };
 
-  constructor(private apiService: ApiService, private modalService: NgbModal) {
+  constructor(private apiService: ApiService, private modalService: NgbModal, private toast: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit {
       },
       err => {
         console.error(err);
+        this.toast.error('Something went wrong', 'Server Error');
       }
     )
   }

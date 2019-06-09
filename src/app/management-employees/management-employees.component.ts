@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../service/login.service";
 import {ApiService} from "../service/api.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-management-employees',
@@ -15,7 +16,7 @@ export class ManagementEmployeesComponent implements OnInit {
   itemsPerPage: number = 10;
   noOfPages: number = 0;
 
-  constructor(private loginService: LoginService, private apiService: ApiService) {
+  constructor(private loginService: LoginService, private apiService: ApiService, private toast: ToastrService) {
     this.currentPage = 1;
   }
 
@@ -40,6 +41,7 @@ export class ManagementEmployeesComponent implements OnInit {
       },
       err => {
         console.error(err);
+        this.toast.error('Something went wrong', 'Server error')
       }
     );
   }
