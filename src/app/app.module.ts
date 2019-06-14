@@ -15,6 +15,7 @@ import {ModalResponseComponent} from './modal-response/modal-response.component'
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrModule} from 'ngx-toastr';
+import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
 
 const appRoutes: Routes = [
   {
@@ -42,7 +43,8 @@ const appRoutes: Routes = [
     LoginComponent,
     HomeComponent,
     ManagementEmployeesComponent,
-    ModalResponseComponent
+    ModalResponseComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,7 @@ const appRoutes: Routes = [
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ModalResponseComponent]
+  entryComponents: [ModalResponseComponent, ConfirmationDialogComponent]
 })
 export class AppModule {
 }

@@ -3,6 +3,8 @@ import {LoginService} from "../service/login.service";
 import {ApiService} from "../service/api.service";
 import {ToastrService} from "ngx-toastr";
 import {EmployeeResponse} from "../models/response/employee-response";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'app-management-employees',
@@ -17,7 +19,8 @@ export class ManagementEmployeesComponent implements OnInit {
   itemsPerPage: number = 10;
   noOfPages: number = 0;
 
-  constructor(private loginService: LoginService, private apiService: ApiService, private toast: ToastrService) {
+  constructor(private loginService: LoginService, private apiService: ApiService, private toast: ToastrService,
+              private modalService: NgbModal) {
     this.currentPage = 1;
   }
 
@@ -28,23 +31,30 @@ export class ManagementEmployeesComponent implements OnInit {
 
   private deleteEmployee(e) {
     const id = e.currentTarget.className;
-    this.apiService.deleteEmployee(id).toPromise().then(
-      res => {
-        for (let i = 0; i < this.employees.length; i++) {
-          if (this.employees[i]._id == id) {
-            this.employees.splice(i, 1);
-            if(this.employees.length === 0 && this.currentPage > 1) {
-              this.removeList();
-              this.getAllEmployees(--this.currentPage, this.itemsPerPage);
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {size: 'lg'});
+
+    modalRef.result.then((data) => {
+      this.apiService.deleteEmployee(id).toPromise().then(
+        res => {
+          this.toast.success('Employee was successfully deleted');
+          for (let i = 0; i < this.employees.length; i++) {
+            if (this.employees[i]._id == id) {
+              this.employees.splice(i, 1);
+              if(this.employees.length === 0 && this.currentPage > 1) {
+                this.removeList();
+                this.getAllEmployees(--this.currentPage, this.itemsPerPage);
+              }
             }
           }
+        },
+        err => {
+          console.error(err);
+          this.toast.error('Something went wrong', 'Server error')
         }
-      },
-      err => {
-        console.error(err);
-        this.toast.error('Something went wrong', 'Server error')
-      }
-    );
+      );
+    }, () => {
+      // do nothing
+    });
   }
 
   private nextPage() {
