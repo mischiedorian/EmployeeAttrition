@@ -21,7 +21,7 @@ def check_password(hashed_password, user_password):
 
 ############ JSON Encoder ################
 import json
-from bson import ObjectId
+
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -40,25 +40,6 @@ employee = employeeAttrition.employee
 ################ Data preparation ################
 
 import pandas as pd
-
-# Used to import data in mongodb
-
-# sf = pd.read_csv('src/assets/employees_good.csv')
-# for i in sf.iterrows():
-#     emp = {
-#         "age": i[1].Age,
-#         "attrition" : i[1].Attrition,
-#         "distance_from_home" : i[1].DistanceFromHome,
-#         "education": i[1].Education,
-#         "job_level": i[1].JobLevel,
-#         "monthly_income": i[1].MonthlyIncome,
-#         "num_companies_worked": i[1].NumCompaniesWorked,
-#         "total_working_years": i[1].TotalWorkingYears,
-#         "training_times_last_year" : i[1].TrainingTimesLastYear,
-#         "years_at_company": i[1].YearsAtCompany,
-#         "years_since_last_promotion": i[1].YearsSinceLastPromotion
-#     }
-#     employee.insert_one(emp)
 
 sf = pd.DataFrame.from_dict(employee.find())
 
