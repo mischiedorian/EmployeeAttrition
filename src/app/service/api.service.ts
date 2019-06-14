@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
-import {LoginRequest} from "../login/login.component";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Employee, ResponseList} from "../management-employees/management-employees.component";
-import {AttritionResponse, EmployeeModel} from "../home/home.component";
+import {LoginRequest} from "../models/request/login-request";
+import {ResponseList} from "../models/response/response-list";
+import {EmployeeModel} from "../models/employee-model";
+import {AttritionResponse} from "../models/response/attrition-response";
 
 @Injectable({
     providedIn: 'root'

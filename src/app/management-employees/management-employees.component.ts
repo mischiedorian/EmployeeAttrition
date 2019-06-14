@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../service/login.service";
 import {ApiService} from "../service/api.service";
 import {ToastrService} from "ngx-toastr";
+import {EmployeeResponse} from "../models/response/employee-response";
 
 @Component({
   selector: 'app-management-employees',
@@ -10,7 +11,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class ManagementEmployeesComponent implements OnInit {
 
-  employees: Employee[] = [];
+  employees: EmployeeResponse[] = [];
   counter: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 10;
@@ -130,24 +131,4 @@ export class ManagementEmployeesComponent implements OnInit {
       }
     )
   }
-}
-
-export interface Employee {
-  _id: string;
-  age: number;
-  distance_from_home: number;
-  education: number;
-  job_level: number;
-  monthly_income: number;
-  num_companies_worked: number;
-  total_working_years: number;
-  training_times_last_year: number;
-  years_at_company: number;
-  years_since_last_promotion: number;
-  attrition: string
-}
-
-export interface ResponseList {
-  obj: Employee[],
-  counter: number
 }

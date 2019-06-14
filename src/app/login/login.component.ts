@@ -3,6 +3,7 @@ import {ApiService} from "../service/api.service";
 import {Router} from "@angular/router";
 import {LoginService} from "../service/login.service";
 import {ToastrService} from "ngx-toastr";
+import {LoginRequest} from "../models/request/login-request";
 
 @Component({
   selector: 'app-login',
@@ -38,9 +39,4 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-}
-
-export interface LoginRequest {
-  username: string;
-  password: string;
 }

@@ -3,6 +3,8 @@ import {ApiService} from "../service/api.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ModalResponseComponent} from "../modal-response/modal-response.component";
 import {ToastrService} from "ngx-toastr";
+import {AttritionResponse} from "../models/response/attrition-response";
+import {EmployeeModel} from "../models/employee-model";
 
 @Component({
   selector: 'app-home',
@@ -53,19 +55,3 @@ export class HomeComponent implements OnInit {
   }
 }
 
-export interface EmployeeModel {
-  age: number;
-  distanceFromHome: number;
-  education: number;
-  jobLevel: number;
-  monthlyIncome: number;
-  numCompaniesWorked: number;
-  totalWorkingYears: number;
-  trainingTimesLastYear: number;
-  yearsAtCompany: number;
-  yearsSinceLastPromotion: number;
-}
-
-export interface AttritionResponse {
-  percentage: number;
-}

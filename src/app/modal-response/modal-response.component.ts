@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {AttritionResponse} from "../home/home.component";
 import * as CanvasJS from '../../assets/canvasjs.min';
+import {AttritionResponse} from "../models/response/attrition-response";
 
 @Component({
   selector: 'app-modal-response',
