@@ -31,7 +31,7 @@ export class ManagementEmployeesComponent implements OnInit {
 
   private deleteEmployee(e) {
     const id = e.currentTarget.className;
-    const modalRef = this.modalService.open(ConfirmationDialogComponent, {size: 'lg'});
+    const modalRef = this.modalService.open(ConfirmationDialogComponent, {size: 'sm'});
 
     modalRef.result.then((data) => {
       this.apiService.deleteEmployee(id).toPromise().then(
