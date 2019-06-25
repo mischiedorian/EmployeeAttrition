@@ -18,6 +18,7 @@ export class ManagementEmployeesComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   noOfPages: number = 0;
+  performance: number = 0;
 
   constructor(private loginService: LoginService, private apiService: ApiService, private toast: ToastrService,
               private modalService: NgbModal) {
@@ -27,6 +28,7 @@ export class ManagementEmployeesComponent implements OnInit {
   ngOnInit() {
     this.loginService.checkLoginPresence('/admin/management');
     this.getAllEmployees(this.currentPage, 10);
+    this.getPerformance();
   };
 
   private deleteEmployee(e) {
@@ -138,6 +140,28 @@ export class ManagementEmployeesComponent implements OnInit {
       },
       err => {
         console.error(err);
+      }
+    )
+  }
+
+  private getPerformance() {
+    this.apiService.getPerformance().toPromise().then(
+      res => {
+        this.performance = res.performance;
+      },
+      err => {
+        console.error(err)
+      }
+    )
+  }
+
+  refresh() {
+    this.apiService.reBalance().toPromise().then(
+      res => {
+        this.performance = res.performance;
+      },
+      err => {
+        console.log(err)
       }
     )
   }

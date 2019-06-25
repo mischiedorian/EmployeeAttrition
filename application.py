@@ -130,19 +130,30 @@ used_features = ['age', 'education', 'job_level', 'num_companies_worked',
                  'training_times_last_year', 'years_at_company', 'years_since_last_promotion',
                  'distance_from_home', 'monthly_income', 'total_working_years']
 
+
+
 # gnb = GaussianNB()
 gnb = GradientBoostingClassifier()
 
-gnb.fit(X_train[used_features].values, X_train['attrition'])
+def balance():
+    global gnb
+    gnb = ''
+    gnb = GradientBoostingClassifier()
+    gnb.fit(X_train[used_features].values, X_train['attrition'])
 
-y_pred = gnb.predict(X_test[used_features])
+    y_pred = gnb.predict(X_test[used_features])
 
-print("Number of mislabeled points out of a total {} points : {}, performance {:05.2f}%"
-      .format(
-          X_test.shape[0],
-          (X_test["attrition"] != y_pred).sum(),
-          100*(1-(X_test["attrition"] != y_pred).sum()/X_test.shape[0])
-))
+    performance = 100 * (1 - (X_test["attrition"] != y_pred).sum() / X_test.shape[0])
+    print("Number of mislabeled points out of a total {} points : {}, performance {:05.2f}%"
+        .format(
+        X_test.shape[0],
+        (X_test["attrition"] != y_pred).sum(),
+        performance
+    ))
+    return performance
+
+performance = balance()
+
 
 sns.distplot(sf.distance_from_home)
 # plt.show()
@@ -239,6 +250,21 @@ class Attrition(Resource):
         }
 
         return JSONEncoder().encode(responseBody), 200
+
+    @app.route('/performance', methods=['GET'])
+    def getPerformance():
+        responseBody = {
+            "performance": "{:05.2f}".format(performance)
+        }
+        return JSONEncoder().encode(responseBody), 200
+
+    @app.route('/rebalance', methods=['GET'])
+    def rebalance():
+        responseBody = {
+            "performance": "{:05.2f}".format(balance())
+        }
+        return JSONEncoder().encode(responseBody), 200
+
 
 class Login(Resource):
     @app.route('/login', methods=['POST'])
