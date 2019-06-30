@@ -42,6 +42,7 @@ export class ManagementEmployeesComponent implements OnInit {
           for (let i = 0; i < this.employees.length; i++) {
             if (this.employees[i]._id == id) {
               this.employees.splice(i, 1);
+              this.counter--;
               if(this.employees.length === 0 && this.currentPage > 1) {
                 this.removeList();
                 this.getAllEmployees(--this.currentPage, this.itemsPerPage);

@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 
   minAge = 18;
   maxAge = 65;
-  minMonthlyIncome = 2500;
+  minMonthlyIncome = 1000;
 
   employeeModel: EmployeeModel = {
     age: null,
