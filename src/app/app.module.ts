@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrModule} from 'ngx-toastr';
 import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
+import {ModalFeatureImportanceComponent} from './modal-feature-importance/modal-feature-importance.component';
 
 const appRoutes: Routes = [
   {
@@ -44,7 +45,8 @@ const appRoutes: Routes = [
     HomeComponent,
     ManagementEmployeesComponent,
     ModalResponseComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ModalFeatureImportanceComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,7 @@ const appRoutes: Routes = [
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ModalResponseComponent, ConfirmationDialogComponent]
+  entryComponents: [ModalResponseComponent, ConfirmationDialogComponent, ModalFeatureImportanceComponent]
 })
 export class AppModule {
 }

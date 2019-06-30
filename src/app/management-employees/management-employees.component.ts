@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {EmployeeResponse} from "../models/response/employee-response";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import {ModalFeatureImportanceComponent} from "../modal-feature-importance/modal-feature-importance.component";
 
 @Component({
   selector: 'app-management-employees',
@@ -43,7 +44,7 @@ export class ManagementEmployeesComponent implements OnInit {
             if (this.employees[i]._id == id) {
               this.employees.splice(i, 1);
               this.counter--;
-              if(this.employees.length === 0 && this.currentPage > 1) {
+              if (this.employees.length === 0 && this.currentPage > 1) {
                 this.removeList();
                 this.getAllEmployees(--this.currentPage, this.itemsPerPage);
               }
@@ -168,22 +169,45 @@ export class ManagementEmployeesComponent implements OnInit {
   }
 
   getJobNameByLevel(level: Number): string {
-    switch(level) {
-      case 1: return 'Novice';
-      case 2: return 'Advanced';
-      case 3: return 'Competent';
-      case 4: return 'Proficient';
-      case 5: return 'Expert';
+    switch (level) {
+      case 1:
+        return 'Novice';
+      case 2:
+        return 'Advanced';
+      case 3:
+        return 'Competent';
+      case 4:
+        return 'Proficient';
+      case 5:
+        return 'Expert';
     }
   }
 
   getEducationNameByLevel(level: Number): string {
-    switch(level) {
-      case 1: return 'Politehnica';
-      case 2: return 'Universitate';
-      case 3: return 'Cibernetica';
-      case 4: return 'Other technical';
-      case 5: return 'Other';
+    switch (level) {
+      case 1:
+        return 'Politehnica';
+      case 2:
+        return 'Universitate';
+      case 3:
+        return 'Cibernetica';
+      case 4:
+        return 'Other technical';
+      case 5:
+        return 'Other';
     }
+  }
+
+  openModalFeatureImportance() {
+    this.apiService.getFeatureImportance().toPromise().then(
+      res => {
+        const modalRef = this.modalService.open(ModalFeatureImportanceComponent, {size: 'lg'});
+        res.importance = res.importance.map(e => e * 100);
+        modalRef.componentInstance.featureImportance = res;
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 }

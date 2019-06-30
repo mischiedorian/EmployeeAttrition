@@ -6,6 +6,7 @@ import {ResponseList} from "../models/response/response-list";
 import {EmployeeModel} from "../models/employee-model";
 import {AttritionResponse} from "../models/response/attrition-response";
 import {PerformanceResponse} from "../models/response/performance-response";
+import {FeatureImportance} from "../models/response/feature-importance";
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,7 @@ export class ApiService {
     private ATTRITION = `${this.BASE_URL}/attrition`;
     private PERFORMANCE = `${this.BASE_URL}/performance`;
     private REBALANCE = `${this.BASE_URL}/rebalance`;
+    private IMPORTANCE = `${this.BASE_URL}/feature-importance`;
     private EMPLOYEES = `${this.BASE_URL}/employees`;
     private LOGIN = `${this.BASE_URL}/login`;
 
@@ -43,5 +45,9 @@ export class ApiService {
 
     reBalance() {
         return this.http.get<PerformanceResponse>(this.REBALANCE);
+    }
+
+    getFeatureImportance() {
+        return this.http.get<FeatureImportance>(this.IMPORTANCE);
     }
 }

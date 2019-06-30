@@ -112,9 +112,6 @@ sf = sf.drop(['monthly_income', 'distance_from_home', 'total_working_years', 'ag
 sf = sf.rename(index=str, columns = {"Distance" : "distance_from_home", "Income" : "monthly_income",
                                      "twy" : "total_working_years", 'AgeIndex': 'age'})
 
-# print(sf.head())
-# print(sf)
-
 X = sf[['age', 'education', 'job_level', 'num_companies_worked',
         'training_times_last_year','years_at_company',
         'years_since_last_promotion', 'distance_from_home',
@@ -127,13 +124,10 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.naive_bayes import GaussianNB
 import time
 
-
 X_train, X_test = train_test_split(sf, test_size=0.5, random_state=int(time.time()))
 used_features = ['age', 'education', 'job_level', 'num_companies_worked',
                  'training_times_last_year', 'years_at_company', 'years_since_last_promotion',
                  'distance_from_home', 'monthly_income', 'total_working_years']
-
-
 
 # gnb = GaussianNB()
 gnb = GradientBoostingClassifier()
@@ -153,12 +147,13 @@ def balance():
         (X_test["attrition"] != y_pred).sum(),
         performance
     ))
+
     return performance
 
 performance = balance()
 
 
-sns.distplot(sf.distance_from_home)
+sns.distplot(sf.monthly_income)
 # plt.show()
 
 ################# API ################
@@ -171,6 +166,8 @@ user = employeeAttrition.user
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
+import json
+
 
 class Attrition(Resource):
     @app.route('/attrition', methods=['POST'])
@@ -224,7 +221,6 @@ class Attrition(Resource):
         ]]
         )
 
-        attritionLevel = ''
         if percentage >= 50:
             attritionLevel = 'yes'
         else:
@@ -265,6 +261,17 @@ class Attrition(Resource):
     def rebalance():
         responseBody = {
             "performance": "{:05.2f}".format(balance())
+        }
+        return JSONEncoder().encode(responseBody), 200
+
+    @app.route('/feature-importance', methods=['GET'])
+    def getFeatureImportance():
+        arrayResponse = []
+        for i in gnb.feature_importances_:
+            arrayResponse.append(i)
+
+        responseBody = {
+            "importance": arrayResponse
         }
         return JSONEncoder().encode(responseBody), 200
 
