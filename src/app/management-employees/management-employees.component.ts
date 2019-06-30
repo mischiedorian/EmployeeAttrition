@@ -166,4 +166,24 @@ export class ManagementEmployeesComponent implements OnInit {
       }
     )
   }
+
+  getJobNameByLevel(level: Number): string {
+    switch(level) {
+      case 1: return 'Novice';
+      case 2: return 'Advanced';
+      case 3: return 'Competent';
+      case 4: return 'Proficient';
+      case 5: return 'Expert';
+    }
+  }
+
+  getEducationNameByLevel(level: Number): string {
+    switch(level) {
+      case 1: return 'Politehnica';
+      case 2: return 'Universitate';
+      case 3: return 'Cibernetica';
+      case 4: return 'Other technical';
+      case 5: return 'Other';
+    }
+  }
 }
