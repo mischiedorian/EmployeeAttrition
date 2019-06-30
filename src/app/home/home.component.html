@@ -3,7 +3,7 @@
     <div class="col-md-6 col-md-offset-3 center">
       <div class="custom-container"><br/>
         <br/><br/>
-        <form (ngSubmit)="f.form.valid && sendData()" #f="ngForm">
+        <form (ngSubmit)="f.form.valid && sendData()" #f="ngForm" [formGroup]="form">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -12,10 +12,8 @@
                     class="form-control"
                     id="education-input"
                     name="education"
-                    [(ngModel)]="employeeModel.education"
-                    #education="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && education.invalid }"
-                    required
+                    formControlName="education"
+                    [ngClass]="{' is-invalid': form.get('education').invalid && form.get('education').touched }"
                 >
                   <option value="" selected="" disabled="" hidden="">Choose education</option>
                   <option value="1">Politehnica</option>
@@ -26,9 +24,9 @@
                 </select>
 
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('education').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="education.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('education').errors?.required">Field is required</div>
                 </div>
               </div>
             </div>
@@ -38,10 +36,8 @@
                     class="form-control"
                     id="job-level-input"
                     name="jobLevel"
-                    [(ngModel)]="employeeModel.jobLevel"
-                    #jobLevel="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && jobLevel.invalid }"
-                    required
+                    formControlName="jobLevel"
+                    [ngClass]="{' is-invalid': form.get('jobLevel').invalid && form.get('jobLevel').touched }"
                 >
                   <option value="" selected="" disabled="" hidden="">Choose job level</option>
                   <option value="1">Novice</option>
@@ -52,9 +48,9 @@
                 </select>
 
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('jobLevel').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="jobLevel.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('jobLevel').errors?.required">Field is required</div>
                 </div>
               </div>
             </div>
@@ -68,15 +64,15 @@
                     id="age-input"
                     type="number"
                     name="age"
-                    [(ngModel)]="employeeModel.age"
-                    #age="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && age.invalid }"
-                    required
+                    formControlName="age"
+                    [ngClass]="{' is-invalid': form.get('age').invalid && form.get('age').touched }"
                 />
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('age').invalid && form.get('age').touched" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="age.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('age').errors?.required">Field is required</div>
+                  <div *ngIf="form.get('age').errors?.min">Your field value is lesser than {{this.minAge}}</div>
+                  <div *ngIf="form.get('age').errors?.max">Your field value is greater than {{this.maxAge}}</div>
                 </div>
               </div>
             </div>
@@ -88,15 +84,14 @@
                     id="companies-worked-input"
                     type="number"
                     name="numCompaniesWorked"
-                    [(ngModel)]="employeeModel.numCompaniesWorked"
-                    #numCompaniesWorked="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && numCompaniesWorked.invalid }"
-                    required
+                    formControlName="numCompaniesWorked"
+                    [ngClass]="{' is-invalid': form.get('numCompaniesWorked').invalid && form.get('numCompaniesWorked').touched }"
                 />
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('numCompaniesWorked').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="numCompaniesWorked.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('numCompaniesWorked').errors?.required">Field is required</div>
+                  <div *ngIf="form.get('numCompaniesWorked').errors?.min">Your field value is lesser than 0</div>
                 </div>
               </div>
             </div>
@@ -110,15 +105,14 @@
                     id="trainings-last-year-input"
                     type="number"
                     name="trainingTimesLastYear"
-                    [(ngModel)]="employeeModel.trainingTimesLastYear"
-                    #trainingTimesLastYear="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && trainingTimesLastYear.invalid }"
-                    required
+                    formControlName="trainingTimesLastYear"
+                    [ngClass]="{' is-invalid': form.get('trainingTimesLastYear').invalid && form.get('trainingTimesLastYear').touched }"
                 />
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('trainingTimesLastYear').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="trainingTimesLastYear.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('trainingTimesLastYear').errors?.required">Field is required</div>
+                  <div *ngIf="form.get('trainingTimesLastYear').errors?.min">Your field value is lesser than 0</div>
                 </div>
               </div>
             </div>
@@ -130,15 +124,14 @@
                     id="years-company-input"
                     type="number"
                     name="yearsAtCompany"
-                    [(ngModel)]="employeeModel.yearsAtCompany"
-                    #yearsAtCompany="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && yearsAtCompany.invalid }"
-                    required
+                    formControlName="yearsAtCompany"
+                    [ngClass]="{' is-invalid': form.get('yearsAtCompany').invalid && form.get('yearsAtCompany').touched }"
                 />
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('yearsAtCompany').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="yearsAtCompany.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('yearsAtCompany').errors?.required">Field is required</div>
+                  <div *ngIf="form.get('yearsAtCompany').errors?.min">Your field value is lesser than 0</div>
                 </div>
               </div>
             </div>
@@ -152,15 +145,14 @@
                     id="years-since-last-promotion-input"
                     type="number"
                     name="yearsSinceLastPromotion"
-                    [(ngModel)]="employeeModel.yearsSinceLastPromotion"
-                    #yearsSinceLastPromotion="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && yearsSinceLastPromotion.invalid }"
-                    required
+                    formControlName="yearsSinceLastPromotion"
+                    [ngClass]="{' is-invalid': form.get('yearsSinceLastPromotion').invalid && form.get('yearsSinceLastPromotion').touched }"
                 />
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('yearsSinceLastPromotion').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="yearsSinceLastPromotion.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('yearsSinceLastPromotion').errors?.required">Field is required</div>
+                  <div *ngIf="form.get('yearsSinceLastPromotion').errors?.min">Your field value is lesser than 0</div>
                 </div>
               </div>
             </div>
@@ -172,15 +164,14 @@
                     id="distance-from-home-input"
                     type="number"
                     name="distanceFromHome"
-                    [(ngModel)]="employeeModel.distanceFromHome"
-                    #distanceFromHome="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && distanceFromHome.invalid }"
-                    required
+                    formControlName="distanceFromHome"
+                    [ngClass]="{' is-invalid': form.get('distanceFromHome').invalid && form.get('distanceFromHome').touched }"
                 />
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('distanceFromHome').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="distanceFromHome.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('distanceFromHome').errors?.required">Field is required</div>
+                  <div *ngIf="form.get('distanceFromHome').errors?.min">Your field value is lesser than 0</div>
                 </div>
               </div>
             </div>
@@ -194,15 +185,14 @@
                     id="salary-input"
                     type="number"
                     name="monthlyIncome"
-                    [(ngModel)]="employeeModel.monthlyIncome"
-                    #monthlyIncome="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && monthlyIncome.invalid }"
-                    required
+                    formControlName="monthlyIncome"
+                    [ngClass]="{' is-invalid': form.get('monthlyIncome').invalid && form.get('monthlyIncome').touched }"
                 />
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('monthlyIncome').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="monthlyIncome.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('monthlyIncome').errors?.required">Field is required</div>
+                  <div *ngIf="form.get('monthlyIncome').errors?.min">Your field value is lesser than {{this.minMonthlyIncome}}</div>
                 </div>
               </div>
             </div>
@@ -214,15 +204,14 @@
                     id="working-years-input"
                     type="number"
                     name="totalWorkingYears"
-                    [(ngModel)]="employeeModel.totalWorkingYears"
-                    #totalWorkingYears="ngModel"
-                    [ngClass]="{' is-invalid': f.submitted && totalWorkingYears.invalid }"
-                    required
+                    formControlName="totalWorkingYears"
+                    [ngClass]="{' is-invalid': form.get('totalWorkingYears').invalid && form.get('totalWorkingYears').touched }"
                 />
                 <!-- input validation group -->
-                <div *ngIf="f.submitted && age.invalid" class="invalid-input">
+                <div *ngIf="form.get('totalWorkingYears').invalid" class="invalid-input">
                   <!-- individual validation errors -->
-                  <div *ngIf="totalWorkingYears.errors?.required">Field is required</div>
+                  <div *ngIf="form.get('totalWorkingYears').errors?.required">Field is required</div>
+                  <div *ngIf="form.get('totalWorkingYears').errors?.min">Your field value is lesser than 0</div>
                 </div>
               </div>
             </div>
@@ -230,7 +219,7 @@
           <br/>
           <div class="row">
             <div class="col-md-2 col-md-offset-5">
-              <button class="btn btn-info" type="submit">Submit</button>
+              <button class="btn btn-info" type="submit" [disabled]="!form.valid">Submit</button>
             </div>
           </div>
         </form>
