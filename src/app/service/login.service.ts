@@ -11,7 +11,7 @@ export class LoginService {
     constructor(private router: Router) {}
 
     checkLoginPresence(currentLocation: string) {
-        const login = window.localStorage.getItem(this.KEY);
+        const login = window.sessionStorage.getItem(this.KEY);
         if(login === undefined || login === '' || login === null) {
             this.router.navigate(['/admin/login']);
         } else {
@@ -20,11 +20,11 @@ export class LoginService {
     }
 
     setAuthKey(user: string) {
-        window.localStorage.setItem(this.KEY, user);
+        window.sessionStorage.setItem(this.KEY, user);
     }
 
     deleteAuthKey() {
-        window.localStorage.setItem(this.KEY, '');
+        window.sessionStorage.setItem(this.KEY, '');
     }
 
     isLoginPage(): boolean {

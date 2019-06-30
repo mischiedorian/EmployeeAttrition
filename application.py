@@ -54,12 +54,14 @@ def get_distance(x):
         return 4
 
 def get_monthly_income(x):
-    if x > 2000 and x <= 5000:
+    if x > 1000 and x <= 4000:
         return 1
-    elif x > 5000 and x <= 10000:
+    elif x > 4000 and x <= 8000:
         return 2
-    else:
+    elif x > 8000 and x <= 12000:
         return 3
+    else:
+        return 4
 
 def get_twy(x):
     if x <= 2:
@@ -122,6 +124,7 @@ Y = sf['attrition']
 ################# Training Classifier ################
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.naive_bayes import GaussianNB
 import time
 
 

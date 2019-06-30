@@ -5,6 +5,7 @@ import {ModalResponseComponent} from "../modal-response/modal-response.component
 import {ToastrService} from "ngx-toastr";
 import {AttritionResponse} from "../models/response/attrition-response";
 import {EmployeeModel} from "../models/employee-model";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,10 @@ import {EmployeeModel} from "../models/employee-model";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  minAge = 18;
+  maxAge = 65;
+  minMonthlyIncome = 1000;
 
   employeeModel: EmployeeModel = {
     age: null,
@@ -26,6 +31,19 @@ export class HomeComponent implements OnInit {
     yearsSinceLastPromotion: null
   };
 
+  form = new FormGroup({
+    age: new FormControl('', [Validators.required, Validators.min(this.minAge), Validators.max(this.maxAge)]),
+    distanceFromHome: new FormControl('', [Validators.required, Validators.min(0)]),
+    education: new FormControl('', [Validators.required]),
+    jobLevel: new FormControl('', [Validators.required]),
+    monthlyIncome: new FormControl('', [Validators.required, Validators.min(this.minMonthlyIncome)]),
+    numCompaniesWorked: new FormControl('', [Validators.required, Validators.min(0)]),
+    totalWorkingYears: new FormControl('', [Validators.required, Validators.min(0)]),
+    trainingTimesLastYear: new FormControl('', [Validators.required, Validators.min(0)]),
+    yearsAtCompany: new FormControl('', [Validators.required, Validators.min(0)]),
+    yearsSinceLastPromotion: new FormControl('', [Validators.required, Validators.min(0)])
+  });
+
   attrition: AttritionResponse = {
     percentage: 0
   };
@@ -37,6 +55,7 @@ export class HomeComponent implements OnInit {
   }
 
   sendData(): void {
+    this.employeeModel = this.form.value;
     this.apiService.getAttrition(this.employeeModel).toPromise().then(
       res => {
         this.attrition = res.body;
