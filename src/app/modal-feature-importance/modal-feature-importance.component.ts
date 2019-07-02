@@ -20,7 +20,7 @@ export class ModalFeatureImportanceComponent implements OnInit {
       animationEnabled: true,
       theme: "light2", // "light1", "light2", "dark1", "dark2"
       title: {
-        text: "Employees Feature importance"
+        text: "Employees Feature Importance"
       },
       axisY: {
         title: "Importance",

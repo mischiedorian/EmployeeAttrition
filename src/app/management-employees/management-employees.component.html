@@ -22,7 +22,7 @@
         <tbody>
         <tr class="table-row" *ngFor="let employee of this.employees">
           <td>{{employee.age}}</td>
-          <td>{{employee.distance_from_home}}</td>
+          <td>{{employee.distance_from_home}} km</td>
           <td>{{getEducationNameByLevel(employee.education)}}</td>
           <td>{{getJobNameByLevel(employee.job_level)}}</td>
           <td>{{employee.monthly_income}}$</td>

@@ -189,7 +189,7 @@ class Attrition(Resource):
 
         result_proba = gnb.predict_proba([[
             get_age(int(args['age'])),
-            get_education(args['education']),
+            int(args['education']),
             int(args['jobLevel']),
             int(args['numCompaniesWorked']),
             int(args['trainingTimesLastYear']),
@@ -230,7 +230,7 @@ class Attrition(Resource):
             "age": int(args['age']),
             "attrition": attritionLevel,
             "distance_from_home": int(args['distanceFromHome']),
-            "education": args['education'],
+            "education": int(args['education']),
             "job_level": int(args['jobLevel']),
             "monthly_income": int(args['monthlyIncome']),
             "num_companies_worked": int(args['numCompaniesWorked']),
